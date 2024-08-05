@@ -24,7 +24,7 @@ RestartSec=3
 WantedBy=multi-user.target
 ```
 
-## 
+## Start Service
 
 `sudo systemctl enable responder`
 
