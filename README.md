@@ -4,10 +4,10 @@
 
 ## Create service file:
 
-/etc/systemd/system/responder.service
+`sudo nano /etc/systemd/system/responder.service`
 
 ## Content:
-
+```
 [Unit]
 Description=Responder Service
 After=network.target
@@ -22,12 +22,13 @@ RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
+```
 
 ## 
 
-sudo systemctl enable responder
+`sudo systemctl enable responder`
 
-sudo service responder start 
+`sudo service responder start`
 
-* If change enything in file, run: sudo systemctl daemon-reload
+* If change enything in file, run: `sudo systemctl daemon-reload`
 * Change network interface wlan0 to target
