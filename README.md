@@ -13,7 +13,7 @@ Description=Responder Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /usr/share/responder/Responder.py -I wlan0 -Q
+ExecStart=/usr/bin/python3 /usr/share/responder/Responder.py -I eth0 -wFdQ
 WorkingDirectory=/usr/share/responder
 StandardOutput=syslog
 StandardError=syslog
