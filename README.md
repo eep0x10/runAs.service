@@ -1,6 +1,8 @@
-# Run anything in background as a service (Linux)
+# Run anything in background as a service
 
-(Example: Run Responder (https://github.com/camopants/igandx-Responder) as a Service to collect hashes)
+(Example: Run Responder (https://github.com/camopants/igandx-Responder) as a service to collect hashes)
+
+`!!!CHECK RESPONDER INTERFACE!!!`
 
 ## Create service file:
 
