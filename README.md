@@ -1,12 +1,24 @@
-![Run as a Service — Entenda o ciclo de um serviço Linux.](docs/assets/banner.svg)
+<div align="center">
+
+<img src="docs/assets/banner.png" alt="Run as a Service — ilustração de marca" width="100%">
 
 # Run as a Service
 
-**Entenda o ciclo de um serviço Linux.**
+### Processos com um ciclo de vida.
+
+Referência documental sobre unidades `systemd` para processos executados em segundo plano. O repositório contém um guia, não uma aplicação, instalador ou coleção de serviços prontos.
+
+[![Formato: Guia](https://img.shields.io/badge/Formato-Guia-34495e?style=flat-square)](#anatomia-de-uma-unidade) [![Ambiente: systemd](https://img.shields.io/badge/Ambiente-systemd-34495e?style=flat-square)](#antes-de-configurar)
 
 [Antes de configurar](#antes-de-configurar) · [Anatomia de uma unidade](#anatomia-de-uma-unidade) · [Inspeção e diagnóstico](#inspeção-e-diagnóstico) · [Limites](#limites)
 
-Referência documental sobre unidades `systemd` para processos executados em segundo plano. O repositório contém um guia, não uma aplicação, instalador ou coleção de serviços prontos.
+</div>
+
+> O banner é uma ilustração conceitual de marca criada com IA; não é uma captura da aplicação nem comprovação de um resultado real.
+
+| Entenda | Inspecione | Diagnostique |
+| :--- | :--- | :--- |
+| Separe Unit, Service e Install. | Consulte a configuração da unidade existente. | Relacione estado, logs e política de reinício. |
 
 ## Antes de configurar
 
