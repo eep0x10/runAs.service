@@ -1,36 +1,39 @@
-# Run anything in background as a service
+![Run as a Service — Entenda o ciclo de um serviço Linux.](docs/assets/banner.svg)
 
-(Example: Run Responder (https://github.com/camopants/igandx-Responder) as a service to collect hashes)
+# Run as a Service
 
-`!!!CHECK RESPONDER INTERFACE!!!`
+**Entenda o ciclo de um serviço Linux.**
 
-## Create service file:
+[Antes de configurar](#antes-de-configurar) · [Anatomia de uma unidade](#anatomia-de-uma-unidade) · [Inspeção e diagnóstico](#inspeção-e-diagnóstico) · [Limites](#limites)
 
-`sudo nano /etc/systemd/system/responder.service`
+Referência documental sobre unidades `systemd` para processos executados em segundo plano. O repositório contém um guia, não uma aplicação, instalador ou coleção de serviços prontos.
 
-## Content:
+## Antes de configurar
+
+Requer uma distribuição Linux que utilize systemd. Defina o executável, usuário de execução, diretório de trabalho, destino dos logs e política de reinício. Use caminhos absolutos e o menor conjunto de privilégios necessário ao seu serviço.
+
+## Anatomia de uma unidade
+
+| Seção | Responsabilidade |
+| --- | --- |
+| `[Unit]` | Descrição e ordenação em relação a outras unidades. |
+| `[Service]` | Processo, diretório, identidade, logs e reinício. |
+| `[Install]` | Associação utilizada quando a unidade é habilitada. |
+
+`After=network.target` ordena a inicialização; não comprova conectividade com um destino remoto. `Restart=always` pode criar um ciclo de falhas se a configuração estiver incorreta. Avalie a política conforme o processo real.
+
+## Inspeção e diagnóstico
+
+Para uma unidade **já existente** chamada `meu-servico.service`:
+
+```sh
+systemctl status meu-servico.service
+journalctl -u meu-servico.service -n 50
+systemctl cat meu-servico.service
 ```
-[Unit]
-Description=Responder Service
-After=network.target
 
-[Service]
-ExecStart=/usr/bin/python3 /usr/share/responder/Responder.py -I eth0 -wFdQ
-WorkingDirectory=/usr/share/responder
-StandardOutput=syslog
-StandardError=syslog
-Restart=always
-RestartSec=3
+Substitua o nome pela unidade que administra. Esses comandos consultam estado, logs e configuração. Criar, habilitar, reiniciar ou alterar uma unidade é uma operação separada, que deve seguir o procedimento do serviço mantido.
 
-[Install]
-WantedBy=multi-user.target
-```
+## Limites
 
-## Start Service
-
-`sudo systemctl enable responder`
-
-`sudo service responder start`
-
-* If change enything in file, run: `sudo systemctl daemon-reload`
-* Change network interface wlan0 to target
+Não há código de aplicação ou testes neste repositório. O guia não instala dependências, não fornece autenticação e não torna um processo seguro por executá-lo como serviço. Exemplos ligados a ferramentas de segurança exigem laboratório autorizado e uma revisão própria de escopo e dados.
